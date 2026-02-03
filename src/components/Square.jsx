@@ -1,5 +1,5 @@
-export default function Square() {
+export default function Square({ value }) {
     return(
-        <button className='quadrato'>1</button>
+        <button className='quadrato'>{ value }</button>
     )
 }
