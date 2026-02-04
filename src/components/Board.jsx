@@ -10,9 +10,19 @@ export default function Board() {
     //imposto var di stato che gestisce se nel quadrato cé una x oppure una o (booleana)
     const [xIsNext, SetXIsnext] = useState(true)
 
+    const winner = calculateWinner(squares);
+    let status;
+    if (winner) {
+        status = "Winner: " + winner;
+    } else {
+        status = "Next player: " + (xIsNext ? "X" : "O");
+    }
+
     //funzione che gestisce il click
     function handleClick(i) {  //'i' funge sa segna posto
-        if (squares[i]) { //se la casella é gua occupata il return blocca la funzione e il codice che viene dopo non é eseguiti
+        if (squares[i] || calculateWinner(squares)) {
+            //se la casella é gua occupata il return blocca la funzione e il codice che viene dopo non é eseguiti
+            //oppure se la funzione calculatewineer ritorna un vincitore
 
             return;
         }
@@ -50,10 +60,11 @@ export default function Board() {
             }
         }
         return null;
-        //dopo avere ciclato tutte e 8 le combinazioni in nessuna si verifcano tytte e3 le condizioni contemporaneamnte
+        //dopo avere ciclato tutte e 8 le combinazioni in nessuna si verifcano tytte e3 le condizioni contemporaneamnte ritorna null
     }
     return (
         <>
+            <div className="status">{status}</div>
             <div className="board-row">
                 <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
                 <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
